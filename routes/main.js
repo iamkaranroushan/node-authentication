@@ -11,6 +11,16 @@ router.get("/",(req, res)=>{
     res.render('layouts/main', {local})
 })
 
+router.post("/",(req, res)=>{
+    const local = {
+        title: "homepage",
+        description : "node authorization"
+    }
+    const data = req.body
+    // res.send(data);
+    data.username === "karan"  ? res.redirect('/admin') : res.send("<h1>wrong credential</h1>")
+})
+
 router.get("/admin",(req, res)=>{
     const local = {
         title: "admin",
@@ -19,15 +29,6 @@ router.get("/admin",(req, res)=>{
     res.render('layouts/admin', {local})
 })
 
-router.post("/",(req, res)=>{
-    const local = {
-        title: "homepage",
-        description : "node authorization"
-    }
-    const data = req.body
-    
-    data.username === "karan"  ? res.redirect('/admin') : res.send("<h1>wrong credential</h1>")
-})
 
 
 
