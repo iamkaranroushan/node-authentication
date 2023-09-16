@@ -3,9 +3,6 @@ const mainRoute  = require('./routes/main')
 const mongoose = require("mongoose")
 
 
-
-
-
 //initiallizes the app
 const app = express()
 
@@ -18,9 +15,9 @@ app.use(express.json());
 
 //database connection
 
-const dbURI = 'mongodb+srv://karan:jpdpk9897c@cluster3.h1qqk80.mongodb.net/'
+const MongodbURI = 'mongodb+srv://karan:jpdpk9897c@cluster3.h1qqk80.mongodb.net/'
 
-mongoose.connect(dbURI, {
+mongoose.connect(MongodbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   }).then((result)=>app.listen(3000,()=>{
