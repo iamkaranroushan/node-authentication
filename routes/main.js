@@ -1,25 +1,33 @@
 const { Router } = require('express');
-
+const user = require("../database/models/users")
 const router = Router();
 
 router.get("/",(req, res)=>{
     const local = {
-        title: "homepage",
+        title: "Signup",
         description : "node authorization"
     }
     
     res.render('layouts/main', {local})
 })
 
-router.post("/",(req, res)=>{
-    const local = {
-        title: "homepage",
-        description : "node authorization"
+router.post("/", async(req, res)=>{
+
+    const{ email, password}= req.body
+    try {
+        const User = await user.create({ email, password })
+        res.status(201).json(User);
+
+    } catch (error) {
+        console.log (error);
+        res.status(400).send('error, user not created');
     }
-    const data = req.body
-    // res.send(data);
-    data.username === "karan"  ? res.redirect('/admin') : res.send("<h1>wrong credential</h1>")
+    
 })
+
+
+
+
 
 router.get("/admin",(req, res)=>{
     const local = {
