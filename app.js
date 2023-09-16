@@ -1,13 +1,15 @@
 const express = require("express");
 const mainRoute  = require('./routes/main')
 const mongoose = require("mongoose")
-
+const expressLayout = require('express-ejs-layouts')
 
 //initiallizes the app
 const app = express()
 
 //middlewares
 app.use(express.static('/public'));
+app.use(expressLayout)
+app.set('layout', './layouts/main')
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
@@ -27,7 +29,8 @@ mongoose.connect(MongodbURI, {
 
 
 //routes
-app.use(mainRoute )
+app.use('/', mainRoute)
+
 
 
 
