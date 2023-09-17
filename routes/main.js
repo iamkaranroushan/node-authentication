@@ -1,9 +1,10 @@
 const { Router } = require('express');
-const user = require("../database/models/users")
+const user = require("../database/models/users");
+const { handle } = require('express/lib/application');
 const router = Router();
 
-// const adminLayout = '../layouts/admin';
-
+const adminLayout = './layouts/admin';
+// const Layout = './layouts/admin'
 //sign up 
 
 router.get("/signup",(req, res)=>{
@@ -15,6 +16,27 @@ router.get("/signup",(req, res)=>{
     res.render('signup', {local})
 })
 
+const handleError=(err)=>{
+    console.log(err.message, err.code)
+    let errors = { email: '', password: ''};
+
+    if (err.code === 11000){
+        errors.email = 'this user email already exists.'
+        return errors;
+    }
+
+    if( err.message.includes('user validation failed')) {
+        Object.values(err.errors).forEach(({properties}) => {
+            errors[properties.path] = properties.message;
+        })
+    }
+
+    return errors;
+}
+
+
+
+
 router.post("/signup", async(req, res)=>{
 
     const{ email, password}= req.body
@@ -23,9 +45,9 @@ router.post("/signup", async(req, res)=>{
         res.status(201).redirect('admin');
         
 
-    } catch (error) {
-        console.log (error);
-        res.status(400).send('error, user not created');
+    } catch (err) {
+        const error = handleError(err);
+        res.status(400).json({error});
     }
     
 })
@@ -62,9 +84,9 @@ router.get("/admin",(req, res)=>{
     const local = {
         title: "admin",
         description : "node authorization",
-        layout: '../layouts/admin'
+        
     }
-    res.render('layouts/admin', {local})
+    res.render('layouts/admin', {local, layout: adminLayout})
 })
 
 
