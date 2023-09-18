@@ -22,8 +22,8 @@ const MongodbURI = 'mongodb+srv://karan:jpdpk9897c@cluster3.h1qqk80.mongodb.net/
 mongoose.connect(MongodbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
-  }).then((result)=>app.listen(3000,()=>{
-        console.log("database connected and app is listening on port 3000");
+  }).then((result)=>app.listen(5000,()=>{
+        console.log("database connected and app is listening on port 5000");
     }) )
     .catch((err)=> console.log(err));
 

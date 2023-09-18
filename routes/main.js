@@ -4,7 +4,8 @@ const { handle } = require('express/lib/application');
 const router = Router();
 
 const adminLayout = './layouts/admin';
-// const Layout = './layouts/admin'
+
+
 //sign up 
 
 router.get("/signup",(req, res)=>{
@@ -15,6 +16,8 @@ router.get("/signup",(req, res)=>{
     
     res.render('signup', {local})
 })
+
+// handling error
 
 const handleError=(err)=>{
     console.log(err.message, err.code)
@@ -35,8 +38,6 @@ const handleError=(err)=>{
 }
 
 
-
-
 router.post("/signup", async(req, res)=>{
 
     const{ email, password}= req.body
@@ -52,7 +53,6 @@ router.post("/signup", async(req, res)=>{
     
 })
 
-
 // log in
 
 router.get("/login",(req, res)=>{
@@ -66,7 +66,7 @@ router.get("/login",(req, res)=>{
 
 router.post("/login", async(req, res)=>{
 
-    const{ email, password}= req.body
+    const{ email, password }= req.body
     try {
         
 
