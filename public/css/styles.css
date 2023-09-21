@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;600;700&family=Roboto:wght@300;400;500&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+
+body{
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    max-width: 100%;
+    background-color: #190D27;
+}
+
+.container {
+    max-width: 982px;
+    margin: 0 auto;
+    padding: 0 10px;
+    
+}
+header {
+    max-width: 50%;
+    margin: 0 25%;
+    margin-bottom: 15%;
+}
+
+header h1{
+    text-align: center;
+    padding: 0 25%;
+    color: rgb(151, 112, 175);
+
+}
+
+footer {
+    max-width: 50%;
+    margin: 0 25%;
+    margin-top: 23%;
+}
+
+footer h2{
+    text-align: center;
+    padding: 0 20%;
+    color: rgb(151, 112, 175);
+
+}
+main{
+    position: relative;
+}
+
+.card{
+    top: 0;
+    left: 25%;
+    margin: 0 29%;
+    width: 420px;
+    height: 520px;
+    background-color: rgb(104, 111, 173,0.36);
+    border-radius:20px;
+}
+.card h2{
+    text-align: center;
+    color: white;
+    margin: 0 25%;
+    padding: 25px;
+ }
+
+ .input{
+    text-align: center ;
+ }
+
+
+ label{
+    max-width: 100%;
+    margin: 0 175px;   
+    color:white;
+ }
+
+ label.password{
+    margin: 0 160px;
+ }
+ 
+.card .input-box{
+    text-align: center;
+    position: relative;
+
+}
+
+
+.input-box input{
+    background-color: rgb(135, 90, 142,0.8);
+    /* background:transparent; */
+    outline: none;
+    margin-top:2%;
+    color: white;
+    font-size: 16px;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 50px;
+    padding-right: 50px;
+    transition: background-color 0.3s ease-in-out opacity 0.3s ease-in-out;
+    border: 2px solid #637ec4;
+ }
+ 
+
+ .email-box{
+    margin-bottom: 10%;
+    margin-top: 5%;
+ }
+ .password-box{
+    margin-bottom: 10%;
+ }
+ .input-box i{
+
+    position:absolute;
+    right: 60px;
+    top: 40%;
+    transform: translate(-70%);
+    font-size: 16px;
+ }
+
+.btn{
+    position: relative;
+    border-radius: 30px;
+    background-color: rgb(135, 90, 142,0.8);
+    padding: 20px 45px 20px 45px;
+    border: 2px solid #637ec4;
+    margin: 10% 30%;
+    font-size: 20px;
+    color:white;
+    cursor: pointer;
+ }
+.btn::before{
+    content: "";
+    top: 0;
+    left: 0;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgb(60, 198, 74) 0%, rgb(12, 115, 212) 100%);
+    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    border-radius: inherit;
+    z-index: -1;
+ }
+ .btn:hover{
+    z-index: 1;
+ }
+ .btn:hover::before{
+    opacity: 1;
+ }
+
+
+
+ .input-box input:hover{
+    background:linear-gradient(to left, rgb(156, 14, 227), rgb(0, 255, 213) );
+    color: #190D27;
+    font-weight: 600;
+
+    transition: opacity 0.3s ease-in-out;
+ }
+
+
+ body::before{
+    content: "";
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    filter: blur(200px);
+    background: linear-gradient(90deg, rgb(113, 60, 198) 0%, rgb(110, 0, 88) 100%);
+    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    border-radius: inherit;
+    z-index: -1;
+ }
+
+ @media only screen and (max-width:982px){
+    .card{
+        margin: 0 auto;
+    }
+    body::before{
+        background: linear-gradient(90deg, rgb(125, 55, 195) 0%, rgb(110, 0, 49) 100%);
+        
+    }
+}
+
+
+ @media only screen and (max-width:606px){
+    .card{
+        margin: 0 15%;
+    }
+    body::before{
+        background: linear-gradient(90deg, rgb(125, 55, 195) 0%, rgb(110, 0, 49) 100%);
+        
+    }
+}
