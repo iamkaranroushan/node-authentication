@@ -4,59 +4,120 @@
     margin: 0;
     padding: 0;
 }
-
-
 body{
     position: relative;
     font-family: 'Poppins', sans-serif;
     max-width: 100%;
     background-color: #190D27;
 }
-
 .container {
     max-width: 982px;
     margin: 0 auto;
     padding: 0 10px;
+    /* border: 2px solid rgb(61, 18, 81); */
+    border-radius: 20px;
     
 }
-header {
-    max-width: 50%;
-    margin: 0 25%;
+
+.header{
+    position: sticky;
+    top: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 100%;
     margin-bottom: 15%;
+    padding: 10px;
+    border-radius: 20px ;
+    background-color: rgba(25, 27, 42, 0.36);
 }
-
-header h1{
+.header h1{
+    height: 36px;
+    width: 120px;
     text-align: center;
-    padding: 0 25%;
-    color: rgb(151, 112, 175);
+    font-size: 25px;
+    color: rgb(200, 103, 200); 
+}
+.header ul{
+    display: flex;
+    /* flex-grow: 1; */
+    flex-direction:row;
+    max-width: 100%;
+    margin: 0 auto;
+    list-style: none;
+    /* flex:1 ; */
 
 }
+ul a{
+    text-decoration:none;
+    font-size: 20px;
+    margin: 10px 40px;
+    color: rgb(151, 112, 175);
+}
+ul li{
+    margin: 2px;
+}
+ul li i{
+    font-size: 30px;
+    margin: 0 2px;
+    transition: transform 0.3s ease-in-out;
+}
+ul li i:hover{
+    color: rgb(241, 165, 223);
+    transform: scale(1.4);
+}
 
+
+    
 footer {
-    max-width: 50%;
-    margin: 0 25%;
-    margin-top: 23%;
+    
+    padding: 0%;
+    margin: 0 20%;
+    margin-top: 10%;
+    border-radius: 20px ;
+    background-color: rgba(25, 27, 42, 0.36);
+    
 }
 
-footer h2{
-    text-align: center;
-    padding: 0 20%;
-    color: rgb(151, 112, 175);
-
+footer ul{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 9px 5%;
+    list-style: none;
 }
+.footbar ul i{
+    font-size: 30px;
+}
+.footbar ul a{
+    margin: 10px;
+}
+
+
+
+
+
+
+
+
+
+
 main{
     position: relative;
 }
-
 .card{
     top: 0;
     left: 25%;
     margin: 0 29%;
     width: 420px;
     height: 520px;
-    background-color: rgb(104, 111, 173,0.36);
+    /* background:transparent; */
+    background-color: #686fad5c;
+    backdrop-filter: blur(50px);
     border-radius:20px;
+    box-shadow: 10px 20px 50px rgba(17, 1, 30, 0.4);
 }
+
 .card h2{
     text-align: center;
     color: white;
@@ -67,7 +128,6 @@ main{
  .input{
     text-align: center ;
  }
-
 
  label{
     max-width: 100%;
@@ -82,15 +142,15 @@ main{
 .card .input-box{
     text-align: center;
     position: relative;
-
+    
 }
 
-
 .input-box input{
-    background-color: rgb(135, 90, 142,0.8);
-    /* background:transparent; */
+    /* background-color: rgb(135, 90, 142,0.8); */
+    background:rgba(189, 43, 184, 0.7);
     outline: none;
     margin-top:2%;
+    border: none;
     color: white;
     font-size: 16px;
     border-radius: 20px;
@@ -98,11 +158,10 @@ main{
     padding-bottom: 10px;
     padding-left: 50px;
     padding-right: 50px;
-    transition: background-color 0.3s ease-in-out opacity 0.3s ease-in-out;
-    border: 2px solid #637ec4;
+    transition:transform 0.4s ease-out;
+    /* border: 2px solid #637ec4; */
  }
  
-
  .email-box{
     margin-bottom: 10%;
     margin-top: 5%;
@@ -117,50 +176,60 @@ main{
     top: 40%;
     transform: translate(-70%);
     font-size: 16px;
+    color:rgb(0, 0, 0);
  }
 
 .btn{
+
     position: relative;
+    top: 50px;
+    left: 131px;
+    border: none;
     border-radius: 30px;
-    background-color: rgb(135, 90, 142,0.8);
-    padding: 20px 45px 20px 45px;
-    border: 2px solid #637ec4;
-    margin: 10% 30%;
+    padding: 20px 40px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border: 2.5px solid black;
     font-size: 20px;
     color:white;
     cursor: pointer;
+    transition: transform 0.4s ease 0s ;
+    overflow: hidden;
+    z-index: 1;
+    white-space: nowrap;
+    
  }
 .btn::before{
     content: "";
-    top: 0;
-    left: 0;
+    /* top: 0%;
+    left: 0%; */
+    bottom: 0%;
+    right: 0%;
     opacity: 0;
+    
     position: absolute;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, rgb(60, 198, 74) 0%, rgb(12, 115, 212) 100%);
-    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    border-radius: inherit;
+    background: linear-gradient(90deg, rgba(0, 128, 255, 0.8) 0%,  rgba(71, 221, 159, 0.8) 100%);
+    transition:opacity 0.4s ease 0s;
     z-index: -1;
  }
- .btn:hover{
-    z-index: 1;
- }
- .btn:hover::before{
+.btn:hover{
+    font-weight: 700;
+    transform: scale(1.1);
+}
+.btn:hover::before{
+    /* z-index: 1; */
     opacity: 1;
  }
 
-
-
- .input-box input:hover{
-    background:linear-gradient(to left, rgb(156, 14, 227), rgb(0, 255, 213) );
+.input-box input:hover {
+    background:linear-gradient(90deg, rgb(60, 198, 74) 0%, rgb(0, 255, 217)33%,rgb(255, 0, 238) 100%);
+    transform: scale(1.1);
+    /* transition: background 0.4s ease-in-out; */
     color: #190D27;
     font-weight: 600;
-
-    transition: opacity 0.3s ease-in-out;
  }
-
-
+ 
  body::before{
     content: "";
     top: 0;
@@ -168,9 +237,11 @@ main{
     position: absolute;
     width: 100%;
     height: 100%;
-    filter: blur(200px);
-    background: linear-gradient(90deg, rgb(113, 60, 198) 0%, rgb(110, 0, 88) 100%);
-    transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    filter: blur(300px);
+    background: 
+        linear-gradient(90deg, rgb(128, 0, 255) 0%, rgb(240, 0, 108) 100%)
+    ;
+    /* transition: background 0.3s ease-in-out, opacity 0.3s ease-in-out; */
     border-radius: inherit;
     z-index: -1;
  }
@@ -180,18 +251,26 @@ main{
         margin: 0 auto;
     }
     body::before{
-        background: linear-gradient(90deg, rgb(125, 55, 195) 0%, rgb(110, 0, 49) 100%);
+        background: linear-gradient(90deg, rgb(128, 0, 255) 0%, rgb(240, 0, 108) 100%);
         
     }
 }
-
 
  @media only screen and (max-width:606px){
     .card{
         margin: 0 15%;
     }
     body::before{
-        background: linear-gradient(90deg, rgb(125, 55, 195) 0%, rgb(110, 0, 49) 100%);
+        background: linear-gradient(90deg, rgb(128, 0, 255) 0%, rgb(240, 0, 108) 100%);
+    }
+    ul li a{
+        margin-left: 20px;
         
     }
+    ul li i{
+        font-size: 25spx ;
+    }
+
+    
+
 }
