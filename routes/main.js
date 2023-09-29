@@ -1,7 +1,10 @@
 const { Router } = require('express');
 const user = require("../database/models/users");
-const { handle } = require('express/lib/application');
+// const { handle } = require('express/lib/application');
 const router = Router();
+const jwt = require('jsonwebtoken');
+
+
 
 const adminLayout = './layouts/admin';
 
@@ -23,6 +26,13 @@ const handleError=(err)=>{
     console.log(err.message, err.code)
     let errors = { email: '', password: ''};
 
+    if(err.message === "incorrect email"){
+        errors.email = "email not registered"
+    }
+
+    if(err.message === "incorrect password"){
+        errors.password = "wrong password"
+    }
     if (err.code === 11000){
         errors.email = 'this user email already exists.'
         return errors;
@@ -36,25 +46,30 @@ const handleError=(err)=>{
 
     return errors;
 }
+const maxAge = 3*24*60*60;
 
+const createToken=(id)=>{
+    return jwt.sign({id}, 'mySecret', {
+        expiresIn:maxAge
+    })
+}
 
 router.post("/signup", async(req, res)=>{
 
     const{ email, password}= req.body
     try {
         const User = await user.create({ email, password })
-        res.status(201).redirect('admin');
-        
+        const token = createToken(User._id)
+        res.cookie('jwt', token, {httpOnly:true, maxAge:maxAge* 1000});
+        res.status(201).redirect('/admin')
 
     } catch (err) {
         const error = handleError(err);
         res.status(400).json({error});
     }
-    
 })
 
 // log in
-
 router.get("/login",(req, res)=>{
     const local = {
         title: "Login",
@@ -67,27 +82,30 @@ router.get("/login",(req, res)=>{
 router.post("/login", async(req, res)=>{
 
     const{ email, password }= req.body
+   
     try {
-        
+        const User = await user.login(email, password);
+        const token = createToken(User._id)
+        res.cookie('jwt', token, {httpOnly:true, maxAge:maxAge* 1000});
+        res.status(200).redirect('/admin')
+    } catch(err) {
+        const errors = handleError(err)
+        res.status(400).json({errors});
+    }
+})
 
-    } catch (error) {
-        
+
+
+router.get('/admin',(req,res)=>{
+    const local = {
+        title: "Admin",
+        description : "node authorization"
     }
     
+    res.render('./layouts/admin', {local, layout:adminLayout})
+
 })
 
-
-
-
-
-router.get("/admin",(req, res)=>{
-    const local = {
-        title: "admin",
-        description : "node authorization",
-        
-    }
-    res.render('layouts/admin', {local, layout: adminLayout})
-})
 
 
 
