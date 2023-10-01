@@ -1,8 +1,9 @@
 const express = require("express");
-const mainRoute  = require('./routes/main')
+const mainRoute = require('./routes/main')
 const mongoose = require("mongoose")
 const expressLayout = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser')
+
 //initiallizes the app
 const app = express()
 
@@ -13,7 +14,7 @@ app.set('layout', './layouts/main')
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended:true}))
 app.use(express.json());
-app.use(cookieParser());
+app.use(cookieParser())
 
 //database connection
 

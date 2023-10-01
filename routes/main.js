@@ -5,8 +5,10 @@ const router = Router();
 const jwt = require('jsonwebtoken');
 
 
-
 const adminLayout = './layouts/admin';
+
+
+
 
 
 //sign up 
@@ -94,9 +96,25 @@ router.post("/login", async(req, res)=>{
     }
 })
 
+const protected = (req, res, next) => {
+     const token = req.cookies.jwt;
+
+     if(token){
+        jwt.verify(token, 'mySecret', (err, decoded)=>{
+            if(err){
+                console.log(err)
+                res.redirect('/login');
+            }
+            console.log(decoded);
+            next();
+        })
+     }else{
+        res.redirect('/login');
+     }
+  };
 
 
-router.get('/admin',(req,res)=>{
+router.get('/admin',protected,(req,res)=>{
     const local = {
         title: "Admin",
         description : "node authorization"
@@ -105,14 +123,15 @@ router.get('/admin',(req,res)=>{
     res.render('./layouts/admin', {local, layout:adminLayout})
 
 })
+//logout
+router.get('/logout', (req, res)=>{
+    res.cookie('jwt','', {maxAge: 1});
+    res.redirect('/admin');
+})
 
-
-
-
-
-
-
+// checking login
 
 
 
 module.exports = router;
+// module.exports = checkUser;
