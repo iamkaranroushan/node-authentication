@@ -1,5 +1,6 @@
 const express = require("express");
 const mainRoute = require('./routes/main')
+
 const mongoose = require("mongoose")
 const expressLayout = require('express-ejs-layouts')
 const cookieParser = require('cookie-parser')
@@ -31,6 +32,7 @@ mongoose.connect(MongodbURI, {
 
 //routes
 app.use('/', mainRoute)
+
 
 
 

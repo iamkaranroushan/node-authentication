@@ -1,137 +1,125 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const user = require("../database/models/users");
 // const { handle } = require('express/lib/application');
 const router = Router();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
+const adminLayout = "./layouts/admin";
 
-const adminLayout = './layouts/admin';
+//sign up
 
+router.get("/signup", (req, res) => {
+  const local = {
+    title: "Signup",
+    description: "node authorization",
+  };
 
-
-
-
-//sign up 
-
-router.get("/signup",(req, res)=>{
-    const local = {
-        title: "Signup",
-        description : "node authorization"
-    }
-    
-    res.render('signup', {local})
-})
+  res.render("signup", { local });
+});
 
 // handling error
 
-const handleError=(err)=>{
-    console.log(err.message, err.code)
-    let errors = { email: '', password: ''};
+const handleError = (err) => {
+  console.log(err.message, err.code);
+  let errors = { email: "", password: "" };
 
-    if(err.message === "incorrect email"){
-        errors.email = "email not registered"
-    }
+  if (err.message === "incorrect email") {
+    errors.email = "email not registered";
+  }
 
-    if(err.message === "incorrect password"){
-        errors.password = "wrong password"
-    }
-    if (err.code === 11000){
-        errors.email = 'this user email already exists.'
-        return errors;
-    }
-
-    if( err.message.includes('user validation failed')) {
-        Object.values(err.errors).forEach(({properties}) => {
-            errors[properties.path] = properties.message;
-        })
-    }
-
+  if (err.message === "incorrect password") {
+    errors.password = "wrong password";
+  }
+  if (err.code === 11000) {
+    errors.email = "this user email already exists.";
     return errors;
-}
-const maxAge = 3*24*60*60;
+  }
 
-const createToken=(id)=>{
-    return jwt.sign({id}, 'mySecret', {
-        expiresIn:maxAge
-    })
-}
+  if (err.message.includes("user validation failed")) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+    });
+  }
 
-router.post("/signup", async(req, res)=>{
+  return errors;
+};
+const maxAge = 3 * 24 * 60 * 60;
 
-    const{ email, password}= req.body
-    try {
-        const User = await user.create({ email, password })
-        const token = createToken(User._id)
-        res.cookie('jwt', token, {httpOnly:true, maxAge:maxAge* 1000});
-        res.status(201).redirect('/admin')
+const createToken = (id) => {
+  return jwt.sign({ id }, "mySecret", {
+    expiresIn: maxAge,
+  });
+};
 
-    } catch (err) {
-        const error = handleError(err);
-        res.status(400).json({error});
-    }
-})
+router.post("/signup", async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const User = await user.create({ email, password });
+    const token = createToken(User._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(201).redirect("/admin");
+  } catch (err) {
+    const error = handleError(err);
+    res.status(400).json({ error });
+  }
+});
 
 // log in
-router.get("/login",(req, res)=>{
-    const local = {
-        title: "Login",
-        description : "node authorization"
-    }
-    
-    res.render('login', {local})
-})
-
-router.post("/login", async(req, res)=>{
-
-    const{ email, password }= req.body
-   
-    try {
-        const User = await user.login(email, password);
-        const token = createToken(User._id)
-        res.cookie('jwt', token, {httpOnly:true, maxAge:maxAge* 1000});
-        res.status(200).redirect('/admin')
-    } catch(err) {
-        const errors = handleError(err)
-        res.status(400).json({errors});
-    }
-})
-
-const protected = (req, res, next) => {
-     const token = req.cookies.jwt;
-
-     if(token){
-        jwt.verify(token, 'mySecret', (err, decoded)=>{
-            if(err){
-                console.log(err)
-                res.redirect('/login');
-            }
-            console.log(decoded);
-            next();
-        })
-     }else{
-        res.redirect('/login');
-     }
+router.get("/login", (req, res) => {
+  const local = {
+    title: "Login",
+    description: "node authorization",
   };
 
+  res.render("login", { local });
+});
 
-router.get('/admin',protected,(req,res)=>{
-    const local = {
-        title: "Admin",
-        description : "node authorization"
-    }
-    
-    res.render('./layouts/admin', {local, layout:adminLayout})
+router.post("/login", async (req, res) => {
+  const { email, password } = req.body;
 
-})
+  try {
+    const User = await user.login(email, password);
+    const token = createToken(User._id);
+    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+    res.status(200).redirect("/admin");
+  } catch (err) {
+    const errors = handleError(err);
+    res.status(400).json({ errors });
+  }
+});
+
+const protected = (req, res, next) => {
+  const token = req.cookies.jwt;
+
+  if (token) {
+    jwt.verify(token, "mySecret", (err, decoded) => {
+      if (err) {
+        console.log(err);
+        res.redirect("/login");
+      }
+      console.log(decoded);
+      next();
+    });
+  } else {
+    res.redirect("/login");
+  }
+};
+
+router.get("/admin", protected, async (req, res) => {
+  const local = {
+    title: "Admin",
+    description: "node authorization",
+  };
+  res.render("./layouts/admin", {local, layout: adminLayout });
+});
 //logout
-router.get('/logout', (req, res)=>{
-    res.cookie('jwt','', {maxAge: 1});
-    res.redirect('/admin');
-})
+router.get("/logout", (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/admin");
+});
 
 // checking login
 
-
-
 module.exports = router;
-// module.exports = checkUser;
+
+
